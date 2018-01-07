@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+
+<title>Topic GIF Search</title>
+</head>
+
+<h1>Topic GIF Search</span></h1>
+    
+<body>
+<div id="topics-view"></div>
+<form>
+<label> Search GIFs</label>
+<input id="newGIF" type="text" name="newGif">
+<input id="findGif" type="submit" name="submit">
+</form>
+<div id="GIF-area"></div>
+
+
+
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+var topics = ["Sailboats","Trekking", "Omega Watches","German Shepherd Dogs","Defense Contracting"];
+
+$("#findGif").on("click",function(){
+  alert("test")
+})
+ 
+for (var i=0;i<topics.length;i++){
+  var a = $("<button>");
+  a.text(topics[i]);
+  a.attr("data", topics[i]);
+  console.log(topics[i]);
+  
+  $("#topics-view").append(a);
+  }
+
+  //var name = "dogs"
+  $("button").on("click",function(){
+  var subJect = $(this).attr("data");
+  var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=whcDy9tQWnvkkuHRo6JUKC0YeowA9EHa&q="+ subJect+"&limit=10"
+
+  $.ajax({
+          url: queryURL,
+          method: "GET"
+        })
+        .done(function(response) {
+          console.log(response);
+         var results = response.data;
+
+         for (var i =0;i<results.length;i++){
+         var GifDiv = $("<div>");
+
+         /// Steamed lined code!!!//
+
+         //var Rating = results[i].rating
+         //p = $("<p>").text("Rating: "+ Rating)
+         p = $("<p>").text("Rating: "+ results[i].rating);
+         
+         var subImg = $("<img class='clickimg'>");
+         var Origimg =results[i].images.fixed_height_still.url;
+         var StillImg = results[i].images.fixed_height_still.url;
+         var Loop = results[i].images.fixed_height.url;
+         //var state = "data-state"
+         
+         subImg.attr("data-still", StillImg);
+         subImg.attr("data-animate", Loop);
+         subImg.attr("src", Origimg);
+         subImg.attr("data-state","still");
+
+       		GifDiv.append(subImg);
+       		GifDiv.append(p);
+       		
+         
+    
+         $("#GIF-area").prepend(GifDiv);
+
+
+         $(".clickimg").on("click" , function() {
+          
+          var state = $(this).attr("data-state");
+
+         	if (state === "still") {
+          $(this).attr("src", $(this).attr("data-animate"));
+          $(this).attr("data-state",$(this).attr("animate"))
+          	} else {
+          	$(this).attr("src", $(this).attr("data-still"));
+            $(this).attr("src", $(this).attr("still"))
+          		
+          	}
+        	
+        	 });
+
+         }
+
+        });
+       
+
+      });
+
+  		
+
+
+
+</script>
+</body>
+</html>
