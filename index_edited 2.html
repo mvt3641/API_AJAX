@@ -2,13 +2,13 @@
 <html>
 <head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
-<link href="https://fonts.googleapis.com/css?family=Rubik+Mono+One" rel="stylesheet">
+
 <title>Topic GIF Search</title>
 </head>
 
-<h1 style ="text-align: center; font-family:'Rubik Mono One', sans-serif;">Topic GIF Search</span></h1>
+<h1>Topic GIF Search</span></h1>
     
-<body style ="background-color:#8b8">
+<body>
 <div id="topics-view"></div>
 <form>
 <label> Search GIFs</label>
@@ -27,15 +27,14 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
 
 <script type="text/javascript">
-var topics = ["Sailing Cup","Hiking","seamaster","German Shepherd","Aerospace"];
-
+var topics = ["Sailboats","Trekking", "Omega Watches","German Shepherd Dogs","Defense Contracting"];
 
 
 
 
  
 for (var i=0;i<topics.length;i++){
-  var a = $("<button class='button'>");
+  var a = $("<button>");
   a.text(topics[i]);
   a.attr("data", topics[i]);
   console.log(topics[i]);
@@ -43,12 +42,8 @@ for (var i=0;i<topics.length;i++){
   $("#topics-view").append(a);
   }
 
-
-
-
-  function search(){
-
-  //var name = "dogs"
+}
+  
   $("button").on("click",function(){
   var subJect = $(this).attr("data");
   var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=whcDy9tQWnvkkuHRo6JUKC0YeowA9EHa&q="+ subJect+"&limit=10"
@@ -74,7 +69,7 @@ for (var i=0;i<topics.length;i++){
          var Origimg =results[i].images.fixed_height_still.url;
          var StillImg = results[i].images.fixed_height_still.url;
          var Loop = results[i].images.fixed_height.url;
-         
+         //var state = "data-state"
          
          subImg.attr("data-still", StillImg);
          subImg.attr("data-animate", Loop);
@@ -89,64 +84,41 @@ for (var i=0;i<topics.length;i++){
          $("#GIF-area").prepend(GifDiv);
 
 
-         $(".clickimg").on("click" , function() {
-          
-          var state = $(this).attr("data-state");
-
-         	if (state === "still") {
-          $(this).attr("src", $(this).attr("data-animate"));
-          $(this).attr("data-state","animate")
-          	} else {
-          	$(this).attr("src", $(this).attr("data-still"));
-           $(this).attr("data-state", "still")
-          		
-          	}
-        	
-        	 });
-
          }
 
         });
        
 
       })
-     
-      }
 
-          $("#findGif").on("click",function(event){
-          event.preventDefault();
-          var NewGIFTopic = $("#newGIF").val().trim();
-          console.log(NewGIFTopic);
-          var n = $("<button class='button'>");
-          n.text(NewGIFTopic);
-          n.attr("data", NewGIFTopic);
-          $("#topics-view").append(n);
-          search();
 
+         $(".clickimg").on("click" , function() {
           
-         
-      
-    })
+           var state = $(this).attr("data-state");
 
-        $(document).on({
-		mouseenter: function(){
-			var selector = $(this).css('background-color', '#1d2');
-	
-
-		},
-		mouseleave: function(){
-			var selector = $(this).css('background-color', '')
-
-			
-		}
-	}, '.button'); 
+         	  if (state === "still") {
+            $(this).attr("src", $(this).attr("data-animate"));
+            $(this).attr("data-state",$(this).attr("animate"))
+          	} else {
+          	$(this).attr("src", $(this).attr("data-still"));
+            $(this).attr("src", $(this).attr("still"))
+          		
+          	}
+        	
+        	 });
 
 
-          search();
-      
-   
 
          
+
+         
+      
+    
+        
+      
+    
+
+
 
       
      
